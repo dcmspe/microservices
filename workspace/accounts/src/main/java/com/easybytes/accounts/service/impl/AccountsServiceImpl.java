@@ -66,6 +66,7 @@ public class AccountsServiceImpl implements IAccountsService {
 
     @Override
     public boolean updateAccount(CustomerDto customerDto) {
+        boolean isUpdated = false;
         AccountsDto accountsDto = customerDto.getAccountsDto();
 
         if(accountsDto != null){
@@ -76,10 +77,30 @@ public class AccountsServiceImpl implements IAccountsService {
             AccountsMapper.mapToAccounts(accountsDto, accounts);
             accountsRepository.save(accounts);
 
-            Long customerId = accounts.getCustomerId();
-            Customer customer = customerRepository.findById(customerId).orElseThrow();
-        }
+            Customer customer = customerRepository.findById(accounts.getCustomerId()).orElseThrow(
+                    ()-> new ResourceNotFoundException("Customer", "customerId", accounts.getCustomerId().toString())
+            );
 
+            CustomerMapper.mapToCustomer(customerDto, customer);
+            customerRepository.save(customer);
+
+            isUpdated = true;
+        }
+        return isUpdated;
+
+    }
+
+    @Override
+    public boolean deleteAccount(String mobileNumber) {
+
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber)
+        );
+
+        accountsRepository.deleteByCustomerId(customer.getCustomerId());
+        customerRepository.deleteById(customer.getCustomerId());
+
+        return true;
     }
 
     private Accounts createNewAccount(Customer customer){
