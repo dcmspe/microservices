@@ -2,9 +2,8 @@ package com.easybytes.accounts.mapper;
 
 import com.easybytes.accounts.dto.AccountsDto;
 import com.easybytes.accounts.entity.Accounts;
-import com.easybytes.accounts.entity.Customer;
 
-public class AccountMapper {
+public class AccountsMapper {
 
     public static AccountsDto mapToAccountsDto(Accounts accounts, AccountsDto accountsDto){
         accountsDto.setAccountNumber(accounts.getAccountNumber());
