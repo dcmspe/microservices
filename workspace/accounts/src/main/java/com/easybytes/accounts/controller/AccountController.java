@@ -4,6 +4,7 @@ import com.easybytes.accounts.constants.AccountsConstants;
 import com.easybytes.accounts.dto.CustomerDto;
 import com.easybytes.accounts.dto.ResponseDto;
 import com.easybytes.accounts.service.IAccountsService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+
+@Tag(
+        name = "CRUD REST APIS for Accounts in Eazybank",
+        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE account detais."
+)
 @RestController
 @RequestMapping(value = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
