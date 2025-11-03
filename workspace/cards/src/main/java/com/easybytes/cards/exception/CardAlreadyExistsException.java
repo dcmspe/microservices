@@ -1,4 +1,4 @@
-package com.easybytes.accounts.exception;
+package com.easybytes.cards.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

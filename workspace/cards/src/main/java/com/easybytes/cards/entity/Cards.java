@@ -1,4 +1,4 @@
-package com.easybytes.accounts.entity;
+package com.easybytes.cards.entity;
 
 import com.easybytes.cards.entity.BaseEntity;
 import jakarta.persistence.*;

@@ -1,8 +1,9 @@
-package com.easybytes.accounts.repository;
+package com.easybytes.cards.repository;
 
-import com.easybytes.accounts.entity.Cards;
+import com.easybytes.cards.entity.Cards;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.smartcardio.Card;
 import java.util.Optional;
 
 public interface CardsRepository extends JpaRepository<Cards, Long> {

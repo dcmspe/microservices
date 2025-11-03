@@ -1,8 +1,8 @@
 package com.easybytes.cards.mapper;
 
 
-import com.easybytes.accounts.entity.Cards;
 import com.easybytes.cards.dto.CardsDto;
+import com.easybytes.cards.entity.Cards;
 
 public class CardsMapper {
     public static CardsDto mapToCardsDto(Cards cards, CardsDto cardsDto) {

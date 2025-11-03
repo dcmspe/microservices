@@ -1,11 +1,11 @@
 package com.easybytes.cards.service.impl;
 
-import com.easybytes.accounts.constants.CardsConstants;
-import com.easybytes.accounts.entity.Cards;
-import com.easybytes.accounts.exception.CardAlreadyExistsException;
-import com.easybytes.accounts.exception.ResourceNotFoundException;
-import com.easybytes.accounts.repository.CardsRepository;
+import com.easybytes.cards.exception.ResourceNotFoundException;
+import com.easybytes.cards.repository.CardsRepository;
+import com.easybytes.cards.constants.CardsConstants;
 import com.easybytes.cards.dto.CardsDto;
+import com.easybytes.cards.entity.Cards;
+import com.easybytes.cards.exception.CardAlreadyExistsException;
 import com.easybytes.cards.mapper.CardsMapper;
 import com.easybytes.cards.service.ICardsService;
 import lombok.AllArgsConstructor;
@@ -26,7 +26,7 @@ public class CardsServiceImpl implements ICardsService {
      */
     @Override
     public void createCard(String mobileNumber) {
-        Optional<Cards> optionalCards = cardsRepository.findByMobileNumber(mobileNumber)
+        Optional<Cards> optionalCards = cardsRepository.findByMobileNumber(mobileNumber);
         if(optionalCards.isPresent()){
             throw new CardAlreadyExistsException(MessageFormat.format("Card already exists with given mobile number {0}", mobileNumber));
         }
@@ -58,7 +58,7 @@ public class CardsServiceImpl implements ICardsService {
                 () -> new ResourceNotFoundException("Card", "mobileNumber", mobileNumber)
         );
 
-        return CardsMapper.mapToCardsDto(cards, new CardsDto());;
+        return CardsMapper.mapToCardsDto(cards, new CardsDto());
     }
 
     @Override

@@ -9,22 +9,22 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Accounts Microservice REST API",
+@OpenAPIDefinition(info = @Info(title = "Cards Microservice REST API",
         version = "v1",
-        description = "Accounts Microservice REST API",
+        description = "Cards Microservice REST API",
         contact = @Contact(name = "Danilo Caetano",
                 email = "sample@gmail.com"),
         license = @License(name = "Apache 2.0",
                 url = "www.something.com")),
         externalDocs = @ExternalDocumentation(
-                description = "Eazybank Accounts microservice REST API Documentation",
+                description = "Eazybank Cards microservice REST API Documentation",
                 url="http://localhost:8080/swagger-ui/index.htm"
         ))
 
-public class AccountsApplication {
+public class CardsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AccountsApplication.class, args);
+		SpringApplication.run(CardsApplication.class, args);
 	}
 
 }

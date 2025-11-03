@@ -1,4 +1,4 @@
-package com.easybytes.accounts.exception;
+package com.easybytes.cards.exception;
 
 import java.text.MessageFormat;
 
