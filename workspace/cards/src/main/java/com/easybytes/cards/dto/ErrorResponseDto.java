@@ -1,4 +1,4 @@
-package com.easybytes.accounts.dto;
+package com.easybytes.cards.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

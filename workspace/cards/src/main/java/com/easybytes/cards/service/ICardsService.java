@@ -1,12 +1,12 @@
-package com.easybytes.accounts.service;
+package com.easybytes.cards.service;
 
-import com.easybytes.accounts.dto.CardsDto;
+import com.easybytes.cards.dto.CardsDto;
 
 public interface ICardsService {
 
     /**
      *
-     * @param cardsDto
+     * @param mobileNumber
      */
     void createCard(String mobileNumber);
 
@@ -26,5 +26,5 @@ public interface ICardsService {
      * @param mobileNumber
      * @return
      */
-    boolean deleteAccount(String mobileNumber);
+    boolean deleteCard(String mobileNumber);
 }

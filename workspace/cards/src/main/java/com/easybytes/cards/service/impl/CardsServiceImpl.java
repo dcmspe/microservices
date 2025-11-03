@@ -1,17 +1,13 @@
-package com.easybytes.accounts.service.impl;
+package com.easybytes.cards.service.impl;
 
 import com.easybytes.accounts.constants.CardsConstants;
-import com.easybytes.accounts.dto.AccountsDto;
-import com.easybytes.accounts.dto.CardsDto;
 import com.easybytes.accounts.entity.Cards;
-import com.easybytes.accounts.entity.Customer;
 import com.easybytes.accounts.exception.CardAlreadyExistsException;
 import com.easybytes.accounts.exception.ResourceNotFoundException;
-import com.easybytes.accounts.mapper.AccountsMapper;
-import com.easybytes.accounts.mapper.CustomerMapper;
 import com.easybytes.accounts.repository.CardsRepository;
-import com.easybytes.accounts.repository.CustomerRepository;
-import com.easybytes.accounts.service.ICardsService;
+import com.easybytes.cards.dto.CardsDto;
+import com.easybytes.cards.mapper.CardsMapper;
+import com.easybytes.cards.service.ICardsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +22,7 @@ public class CardsServiceImpl implements ICardsService {
     private CardsRepository cardsRepository;
 
     /**
-     * Creates a new account for the provided customer details.
-     *
-     * @param cardsDto an object containing customer information such as name, email, and mobile number
+     * @param mobileNumber - Mobile Number of the Customer
      */
     @Override
     public void createCard(String mobileNumber) {
@@ -40,6 +34,11 @@ public class CardsServiceImpl implements ICardsService {
 
     }
 
+    /**
+     *
+     * @param mobileNumber - Mobile number of the customer
+     * @return the new card details
+     */
     private Cards createNewCard(String mobileNumber){
         Cards newCard = new Cards();
         long randomCardNumber = (long) (Math.random() * 100000000000L);
@@ -53,69 +52,36 @@ public class CardsServiceImpl implements ICardsService {
     }
 
     @Override
-    public CardsDto fetchAccount(String mobileNumber) {
-        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
-                () -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber)
+    public CardsDto fetchCard(String mobileNumber) {
+
+        Cards cards = cardsRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Card", "mobileNumber", mobileNumber)
         );
 
-        Cards accounts = cardsRepository.findByCustomerId(customer.getCustomerId()).orElseThrow(
-                () -> new ResourceNotFoundException("Account", "customerId", customer.getCustomerId().toString())
-        );
-
-        CardsDto cardsDto = CustomerMapper.mapToCustomerDto(customer, new CardsDto());
-        cardsDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts, new AccountsDto()));
-        return cardsDto;
+        return CardsMapper.mapToCardsDto(cards, new CardsDto());;
     }
 
     @Override
-    public boolean updateAccount(CardsDto cardsDto) {
-        boolean isUpdated = false;
-        AccountsDto accountsDto = cardsDto.getAccountsDto();
-
-        if(accountsDto != null){
-            Cards accounts = cardsRepository.findById(accountsDto.getAccountNumber()).orElseThrow(
-                    () -> new ResourceNotFoundException("Account", "accountNumber", accountsDto.getAccountNumber().toString())
-            );
-
-            AccountsMapper.mapToAccounts(accountsDto, accounts);
-            cardsRepository.save(accounts);
-
-            Customer customer = customerRepository.findById(accounts.getCustomerId()).orElseThrow(
-                    ()-> new ResourceNotFoundException("Customer", "customerId", accounts.getCustomerId().toString())
-            );
-
-            CustomerMapper.mapToCustomer(cardsDto, customer);
-            customerRepository.save(customer);
-
-            isUpdated = true;
-        }
-        return isUpdated;
-
-    }
-
-    @Override
-    public boolean deleteAccount(String mobileNumber) {
-
-        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
-                () -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber)
+    public boolean updateCard(CardsDto cardsDto) {
+        Cards cards = cardsRepository.findByCardNumber(cardsDto.getCardNumber()).orElseThrow(
+                () -> new ResourceNotFoundException("Card", "cardNumber", cardsDto.getCardNumber())
         );
 
-        cardsRepository.deleteByCustomerId(customer.getCustomerId());
-        customerRepository.deleteById(customer.getCustomerId());
+        CardsMapper.mapToCards(cardsDto, cards);
+        cardsRepository.save(cards);
 
         return true;
     }
 
-    private Cards createNewAccount(Customer customer){
-        Cards newAccount = new Cards();
-        newAccount.setCustomerId(customer.getCustomerId());
-        long randomAccNumber = (long) (Math.random() * 1000000000);
+    @Override
+    public boolean deleteCard(String mobileNumber) {
 
-        newAccount.setAccountNumber(randomAccNumber);
-        newAccount.setAccountType(CardsConstants.SAVINGS);
-        newAccount.setBranchAddress(CardsConstants.ADDRESS);
-        newAccount.setCreatedAt(LocalDateTime.now());
-        newAccount.setCreatedBy("Anonymous");
-        return newAccount;
+        Cards card = cardsRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Cards", "mobileNumber", mobileNumber)
+        );
+
+        cardsRepository.deleteById(card.getCardId());
+
+        return true;
     }
 }

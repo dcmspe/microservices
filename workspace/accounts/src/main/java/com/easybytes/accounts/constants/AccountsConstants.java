@@ -14,8 +14,8 @@ public class AccountsConstants {
     public static final String MESSAGE_200 = "Request processed successfully";
     public static final String STATUS_500 = "500";
     public static final String MESSAGE_500 = "An error occurred. Please try again or contact Dev team";
-    public static final String STATUS_407 = "407";
-    public static final String MESSAGE_407_UPDATE = "An error occurred during the update operation.";
-    public static final String MESSAGE_407_DELETE = "An error occurred during the delete operation.";
+    public static final String STATUS_417 = "417";
+    public static final String MESSAGE_417_UPDATE = "An error occurred during the update operation.";
+    public static final String MESSAGE_417_DELETE = "An error occurred during the delete operation.";
 
 }

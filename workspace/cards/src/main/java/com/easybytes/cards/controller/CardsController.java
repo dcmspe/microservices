@@ -1,7 +1,7 @@
 package com.easybytes.cards.controller;
 
 import com.easybytes.cards.constants.CardsConstants;
-import com.easybytes.cards.dto.CustomerDto;
+import com.easybytes.cards.dto.CardsDto;
 import com.easybytes.cards.dto.ErrorResponseDto;
 import com.easybytes.cards.dto.ResponseDto;
 import com.easybytes.cards.service.ICardsService;
@@ -32,35 +32,35 @@ import org.springframework.web.bind.annotation.*;
 public class CardsController {
 
     private ICardsService iCardsService;
-    @Operation(summary = "Create Account REST API",
-    description = "REST API to create new Customer and Account inside EasyBank")
+    @Operation(summary = "Create Card REST API",
+    description = "REST API to create new Customer and Card inside EasyBank")
     @ApiResponse(
             responseCode = "201",
             description = "HTTP Status CREATED"
     )
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto){
+    public ResponseEntity<ResponseDto> createCard(@Valid @RequestParam @Pattern(regexp = "^$|[0-9]{10}", message = "Mobile number must be 10 digits") String mobileNumber){
 
-        iCardsService.createAccount(customerDto);
+        iCardsService.createCard(mobileNumber);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto(CardsConstants.STATUS_201, CardsConstants.MESSAGE_201));
     }
 
-    @Operation(summary = "Fetch Account REST API",
-            description = "REST API to fetch new Customer and Account details based on a mobile number")
+    @Operation(summary = "Fetch Card REST API",
+            description = "REST API to fetch new Customer and Card details based on a mobile number")
     @ApiResponse(
             responseCode = "200",
             description = "HTTP Status OK"
     )
     @GetMapping("/fetch")
-    public ResponseEntity<CustomerDto> fetchAccountDetails(@RequestParam @Pattern(regexp = "^|[0-9]{10}", message = "Mobile Number must be 10 digits") String mobileNumber){
-        CustomerDto customerDto = iCardsService.fetchAccount(mobileNumber);
-        return ResponseEntity.ok(customerDto);
+    public ResponseEntity<CardsDto> fetchCardDetails(@RequestParam @Pattern(regexp = "^|[0-9]{10}", message = "Mobile Number must be 10 digits") String mobileNumber){
+        CardsDto cardsDto = iCardsService.fetchCard(mobileNumber);
+        return ResponseEntity.ok(cardsDto);
     }
 
-    @Operation(summary = "Update Account REST API",
-            description = "REST API to update Customer and Account details based on a account number")
+    @Operation(summary = "Update Card REST API",
+            description = "REST API to update Customer and Card details based on a account number")
     @ApiResponses({
         @ApiResponse(
                 responseCode = "200",
@@ -76,18 +76,18 @@ public class CardsController {
         )
     })
     @PutMapping("/update")
-    public ResponseEntity<ResponseDto> updateAccountDetails(@Valid @RequestBody CustomerDto customerDto){
-        boolean isUpdated = iCardsService.updateAccount(customerDto);
+    public ResponseEntity<ResponseDto> updateCard(@Valid @RequestBody CardsDto cardsDto){
+        boolean isUpdated = iCardsService.updateCard(cardsDto);
 
         if (isUpdated) {
             return ResponseEntity.ok(new ResponseDto(CardsConstants.STATUS_200, CardsConstants.MESSAGE_200));
         }else{
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseDto(CardsConstants.STATUS_407, CardsConstants.MESSAGE_407_UPDATE));
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseDto(CardsConstants.STATUS_417, CardsConstants.MESSAGE_417_UPDATE));
         }
     }
 
-    @Operation(summary = "Delete Account & Customer Details REST API",
-            description = "REST API to update Customer and Account details based on a account number")
+    @Operation(summary = "Delete Card & Customer Details REST API",
+            description = "REST API to update Customer and Card details based on a account number")
     @ApiResponses({
             @ApiResponse(
                 responseCode = "200",
@@ -108,13 +108,13 @@ public class CardsController {
             )
     })
     @DeleteMapping("/delete")
-    public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam @Pattern(regexp = "^|[0-9]{10}", message = "Mobile Number must be 10 digits") Long mobileNumber){
-        boolean isDeleted = iCardsService.deleteAccount(mobileNumber.toString());
+    public ResponseEntity<ResponseDto> deleteCard(@RequestParam @Pattern(regexp = "^|[0-9]{10}", message = "Mobile Number must be 10 digits") Long mobileNumber){
+        boolean isDeleted = iCardsService.deleteCard(mobileNumber.toString());
 
         if (isDeleted) {
             return ResponseEntity.ok(new ResponseDto(CardsConstants.STATUS_200, CardsConstants.MESSAGE_200));
         }else{
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseDto(CardsConstants.STATUS_407, CardsConstants.MESSAGE_407_DELETE));
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseDto(CardsConstants.STATUS_417, CardsConstants.MESSAGE_417_DELETE));
         }
     }
 
