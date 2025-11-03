@@ -1,10 +1,10 @@
-package com.easybytes.accounts.controller;
+package com.easybytes.cards.controller;
 
-import com.easybytes.accounts.constants.AccountsConstants;
-import com.easybytes.accounts.dto.CustomerDto;
-import com.easybytes.accounts.dto.ErrorResponseDto;
-import com.easybytes.accounts.dto.ResponseDto;
-import com.easybytes.accounts.service.IAccountsService;
+import com.easybytes.cards.constants.CardsConstants;
+import com.easybytes.cards.dto.CustomerDto;
+import com.easybytes.cards.dto.ErrorResponseDto;
+import com.easybytes.cards.dto.ResponseDto;
+import com.easybytes.cards.service.ICardsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,16 +22,16 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Tag(
-        name = "CRUD REST APIS for Accounts in Eazybank",
+        name = "CRUD REST APIS for Cards in Eazybank",
         description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE account detais."
 )
 @RestController
 @RequestMapping(value = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
 @Validated
-public class AccountController {
+public class CardsController {
 
-    private IAccountsService iAccountsService;
+    private ICardsService iCardsService;
     @Operation(summary = "Create Account REST API",
     description = "REST API to create new Customer and Account inside EasyBank")
     @ApiResponse(
@@ -42,9 +42,9 @@ public class AccountController {
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto){
 
-        iAccountsService.createAccount(customerDto);
+        iCardsService.createAccount(customerDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto(AccountsConstants.STATUS_201, AccountsConstants.MESSAGE_201));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto(CardsConstants.STATUS_201, CardsConstants.MESSAGE_201));
     }
 
     @Operation(summary = "Fetch Account REST API",
@@ -55,7 +55,7 @@ public class AccountController {
     )
     @GetMapping("/fetch")
     public ResponseEntity<CustomerDto> fetchAccountDetails(@RequestParam @Pattern(regexp = "^|[0-9]{10}", message = "Mobile Number must be 10 digits") String mobileNumber){
-        CustomerDto customerDto = iAccountsService.fetchAccount(mobileNumber);
+        CustomerDto customerDto = iCardsService.fetchAccount(mobileNumber);
         return ResponseEntity.ok(customerDto);
     }
 
@@ -77,12 +77,12 @@ public class AccountController {
     })
     @PutMapping("/update")
     public ResponseEntity<ResponseDto> updateAccountDetails(@Valid @RequestBody CustomerDto customerDto){
-        boolean isUpdated = iAccountsService.updateAccount(customerDto);
+        boolean isUpdated = iCardsService.updateAccount(customerDto);
 
         if (isUpdated) {
-            return ResponseEntity.ok(new ResponseDto(AccountsConstants.STATUS_200, AccountsConstants.MESSAGE_200));
+            return ResponseEntity.ok(new ResponseDto(CardsConstants.STATUS_200, CardsConstants.MESSAGE_200));
         }else{
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseDto(AccountsConstants.STATUS_407, AccountsConstants.MESSAGE_407_UPDATE));
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseDto(CardsConstants.STATUS_407, CardsConstants.MESSAGE_407_UPDATE));
         }
     }
 
@@ -109,12 +109,12 @@ public class AccountController {
     })
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam @Pattern(regexp = "^|[0-9]{10}", message = "Mobile Number must be 10 digits") Long mobileNumber){
-        boolean isDeleted = iAccountsService.deleteAccount(mobileNumber.toString());
+        boolean isDeleted = iCardsService.deleteAccount(mobileNumber.toString());
 
         if (isDeleted) {
-            return ResponseEntity.ok(new ResponseDto(AccountsConstants.STATUS_200, AccountsConstants.MESSAGE_200));
+            return ResponseEntity.ok(new ResponseDto(CardsConstants.STATUS_200, CardsConstants.MESSAGE_200));
         }else{
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseDto(AccountsConstants.STATUS_407, AccountsConstants.MESSAGE_407_DELETE));
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseDto(CardsConstants.STATUS_407, CardsConstants.MESSAGE_407_DELETE));
         }
     }
 

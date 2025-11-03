@@ -1,21 +1,21 @@
 package com.easybytes.accounts.mapper;
 
-import com.easybytes.accounts.dto.CustomerDto;
+import com.easybytes.accounts.dto.CardsDto;
 import com.easybytes.accounts.entity.Customer;
 
 public class CustomerMapper {
-    public static CustomerDto mapToCustomerDto(Customer customer, CustomerDto customerDto){
-        customerDto.setName(customer.getName());
-        customerDto.setEmail(customer.getEmail());
-        customerDto.setMobileNumber(customer.getMobileNumber());
+    public static CardsDto mapToCustomerDto(Customer customer, CardsDto cardsDto){
+        cardsDto.setName(customer.getName());
+        cardsDto.setEmail(customer.getEmail());
+        cardsDto.setMobileNumber(customer.getMobileNumber());
 
-        return customerDto;
+        return cardsDto;
     }
 
-    public static Customer mapToCustomer(CustomerDto customerDto, Customer customer){
-        customer.setName(customerDto.getName());
-        customer.setEmail(customerDto.getEmail());
-        customer.setMobileNumber(customerDto.getMobileNumber());
+    public static Customer mapToCustomer(CardsDto cardsDto, Customer customer){
+        customer.setName(cardsDto.getName());
+        customer.setEmail(cardsDto.getEmail());
+        customer.setMobileNumber(cardsDto.getMobileNumber());
 
         return customer;
     }

@@ -1,20 +1,15 @@
 package com.easybytes.accounts.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
 @Data
 @Schema(
     name = "Customer",
     description = "Schema to hold Customer and Account information"
 )
-public class CustomerDto {
+public class CardsDto {
 
     @Schema(
             description = "Name of the customer",
