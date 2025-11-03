@@ -21,10 +21,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
                 url="http://localhost:8080/swagger-ui/index.htm"
         ))
 
-public class CardsApplication {
+public class LoansApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CardsApplication.class, args);
+		SpringApplication.run(LoansApplication.class, args);
 	}
 
 }

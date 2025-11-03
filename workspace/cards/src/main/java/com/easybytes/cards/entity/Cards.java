@@ -1,6 +1,5 @@
 package com.easybytes.cards.entity;
 
-import com.easybytes.cards.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

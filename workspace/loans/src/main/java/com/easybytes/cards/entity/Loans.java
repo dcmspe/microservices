@@ -1,0 +1,34 @@
+package com.easybytes.cards.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+public class Loans extends BaseEntity {
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "loan_id")
+    private  Long loanId;
+
+    @Column(name = "mobile_number")
+    private String mobileNumber;
+
+    @Column(name = "loan_number")
+    private String loanNumber;
+
+    @Column(name = "total_loan")
+    private int totalLoan;
+
+    @Column(name = "amount_paid")
+    private int amountPaid;
+
+    @Column(name = "outstanding_amount")
+    private int outstandingAmount;
+
+}
