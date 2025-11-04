@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Tag(
-        name = "CRUD REST APIS for Cards in Eazybank",
-        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE account detais."
+        name = "CRUD REST APIS for Loans in Eazybank",
+        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE Loan detais."
 )
 @RestController
 @RequestMapping(value = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -32,35 +32,35 @@ import org.springframework.web.bind.annotation.*;
 public class LoansController {
 
     private ILoansService iLoansService;
-    @Operation(summary = "Create Card REST API",
-    description = "REST API to create new Customer and Card inside EasyBank")
+    @Operation(summary = "Create Loan REST API",
+    description = "REST API to create new Loan inside EasyBank")
     @ApiResponse(
             responseCode = "201",
             description = "HTTP Status CREATED"
     )
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseDto> createCard(@Valid @RequestParam @Pattern(regexp = "^$|[0-9]{10}", message = "Mobile number must be 10 digits") String mobileNumber){
+    public ResponseEntity<ResponseDto> createLoan(@Valid @RequestParam @Pattern(regexp = "^$|[0-9]{10}", message = "Mobile number must be 10 digits") String mobileNumber){
 
-        iLoansService.createCard(mobileNumber);
+        iLoansService.createLoan(mobileNumber);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto(LoansConstants.STATUS_201, LoansConstants.MESSAGE_201));
     }
 
-    @Operation(summary = "Fetch Card REST API",
-            description = "REST API to fetch new Customer and Card details based on a mobile number")
+    @Operation(summary = "Fetch Loan REST API",
+            description = "REST API to fetch new Loan based on a mobile number")
     @ApiResponse(
             responseCode = "200",
             description = "HTTP Status OK"
     )
     @GetMapping("/fetch")
-    public ResponseEntity<LoansDto> fetchCardDetails(@RequestParam @Pattern(regexp = "^|[0-9]{10}", message = "Mobile Number must be 10 digits") String mobileNumber){
-        LoansDto loansDto = iLoansService.fetchCard(mobileNumber);
+    public ResponseEntity<LoansDto> fetchLoanDetails(@RequestParam @Pattern(regexp = "^|[0-9]{10}", message = "Mobile Number must be 10 digits") String mobileNumber){
+        LoansDto loansDto = iLoansService.fetchLoan(mobileNumber);
         return ResponseEntity.ok(loansDto);
     }
 
     @Operation(summary = "Update Card REST API",
-            description = "REST API to update Customer and Card details based on a account number")
+            description = "REST API to update loan")
     @ApiResponses({
         @ApiResponse(
                 responseCode = "200",
@@ -76,8 +76,8 @@ public class LoansController {
         )
     })
     @PutMapping("/update")
-    public ResponseEntity<ResponseDto> updateCard(@Valid @RequestBody LoansDto loansDto){
-        boolean isUpdated = iLoansService.updateCard(loansDto);
+    public ResponseEntity<ResponseDto> updateLoan(@Valid @RequestBody LoansDto loansDto){
+        boolean isUpdated = iLoansService.updateLoan(loansDto);
 
         if (isUpdated) {
             return ResponseEntity.ok(new ResponseDto(LoansConstants.STATUS_200, LoansConstants.MESSAGE_200));
@@ -86,8 +86,8 @@ public class LoansController {
         }
     }
 
-    @Operation(summary = "Delete Card & Customer Details REST API",
-            description = "REST API to update Customer and Card details based on a account number")
+    @Operation(summary = "Delete Loan Details REST API",
+            description = "REST API to update Loan and  based on mobile number")
     @ApiResponses({
             @ApiResponse(
                 responseCode = "200",
@@ -108,8 +108,8 @@ public class LoansController {
             )
     })
     @DeleteMapping("/delete")
-    public ResponseEntity<ResponseDto> deleteCard(@RequestParam @Pattern(regexp = "^|[0-9]{10}", message = "Mobile Number must be 10 digits") Long mobileNumber){
-        boolean isDeleted = iLoansService.deleteCard(mobileNumber.toString());
+    public ResponseEntity<ResponseDto> deleteLoan(@RequestParam @Pattern(regexp = "^|[0-9]{10}", message = "Mobile Number must be 10 digits") String mobileNumber){
+        boolean isDeleted = iLoansService.deleteLoan(mobileNumber);
 
         if (isDeleted) {
             return ResponseEntity.ok(new ResponseDto(LoansConstants.STATUS_200, LoansConstants.MESSAGE_200));

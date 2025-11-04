@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +28,7 @@ public class LoansServiceImpl implements ILoansService {
     public void createLoan(String mobileNumber) {
         Optional<Loans> optionalCards = loansRepository.findByMobileNumber(mobileNumber);
         if(optionalCards.isPresent()){
-            throw new LoanAlreadyExistsException(MessageFormat.format("Card already exists with given mobile number {0}", mobileNumber));
+            throw new LoanAlreadyExistsException(MessageFormat.format("Loan already exists with given mobile number {0}", mobileNumber));
         }
         loansRepository.save(createNewLoan(mobileNumber));
 
@@ -40,7 +41,7 @@ public class LoansServiceImpl implements ILoansService {
      */
     private Loans createNewLoan(String mobileNumber){
         Loans newLoan = new Loans();
-        long randomLoanNumber = (long) (Math.random() * 100000000000L);
+        long randomLoanNumber = 100000000000L + new Random().nextInt(900000000);
         newLoan.setLoanNumber(Long.toString(randomLoanNumber));
         newLoan.setMobileNumber(mobileNumber);
         newLoan.setLoanType(LoansConstants.HOME_LOAN);

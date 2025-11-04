@@ -13,6 +13,7 @@ public class Cards extends BaseEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "card_id")
+    @Id
     private  Long cardId;
 
     @Column(name = "card_number")

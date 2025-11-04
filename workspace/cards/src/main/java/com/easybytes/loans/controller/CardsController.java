@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(
         name = "CRUD REST APIS for Cards in Eazybank",
-        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE account detais."
+        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE card detais."
 )
 @RestController
 @RequestMapping(value = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -33,7 +33,7 @@ public class CardsController {
 
     private ICardsService iCardsService;
     @Operation(summary = "Create Card REST API",
-    description = "REST API to create new Customer and Card inside EasyBank")
+    description = "REST API to create new Card inside EasyBank")
     @ApiResponse(
             responseCode = "201",
             description = "HTTP Status CREATED"
@@ -48,7 +48,7 @@ public class CardsController {
     }
 
     @Operation(summary = "Fetch Card REST API",
-            description = "REST API to fetch new Customer and Card details based on a mobile number")
+            description = "REST API to fetch Card details based on a mobile number")
     @ApiResponse(
             responseCode = "200",
             description = "HTTP Status OK"
@@ -60,7 +60,7 @@ public class CardsController {
     }
 
     @Operation(summary = "Update Card REST API",
-            description = "REST API to update Customer and Card details based on a account number")
+            description = "REST API to update Card")
     @ApiResponses({
         @ApiResponse(
                 responseCode = "200",
@@ -86,8 +86,8 @@ public class CardsController {
         }
     }
 
-    @Operation(summary = "Delete Card & Customer Details REST API",
-            description = "REST API to update Customer and Card details based on a account number")
+    @Operation(summary = "Delete Card Details REST API",
+            description = "REST API to update Card based on a card number")
     @ApiResponses({
             @ApiResponse(
                 responseCode = "200",
@@ -108,8 +108,8 @@ public class CardsController {
             )
     })
     @DeleteMapping("/delete")
-    public ResponseEntity<ResponseDto> deleteCard(@RequestParam @Pattern(regexp = "^|[0-9]{10}", message = "Mobile Number must be 10 digits") Long mobileNumber){
-        boolean isDeleted = iCardsService.deleteCard(mobileNumber.toString());
+    public ResponseEntity<ResponseDto> deleteCard(@RequestParam @Pattern(regexp = "^|[0-9]{10}", message = "Mobile Number must be 10 digits") String mobileNumber){
+        boolean isDeleted = iCardsService.deleteCard(mobileNumber);
 
         if (isDeleted) {
             return ResponseEntity.ok(new ResponseDto(CardsConstants.STATUS_200, CardsConstants.MESSAGE_200));

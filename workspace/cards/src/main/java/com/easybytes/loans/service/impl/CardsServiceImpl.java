@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @AllArgsConstructor
@@ -40,7 +41,7 @@ public class CardsServiceImpl implements ICardsService {
      */
     private Cards createNewCard(String mobileNumber){
         Cards newCard = new Cards();
-        long randomCardNumber = (long) (Math.random() * 100000000000L);
+        long randomCardNumber = 100000000000L + new Random().nextInt(900000000);
         newCard.setCardNumber(Long.toString(randomCardNumber));
         newCard.setMobileNumber(mobileNumber);
         newCard.setCardType(CardsConstants.CREDIT_CARD);
