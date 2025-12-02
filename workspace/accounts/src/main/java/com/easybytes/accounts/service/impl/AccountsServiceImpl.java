@@ -106,9 +106,10 @@ public class AccountsServiceImpl implements IAccountsService {
     private Accounts createNewAccount(Customer customer){
         Accounts newAccount = new Accounts();
         newAccount.setCustomerId(customer.getCustomerId());
-        long randomAccNumber = (long) (Math.random() * 1000000000);
-
-        newAccount.setAccountNumber(randomAccNumber);
+        // Let the database generate the account number (AUTO_INCREMENT / IDENTITY).
+        // Previously the code set a random account number here which conflicts with
+        // @GeneratedValue(strategy = GenerationType.IDENTITY) and causes Hibernate
+        // to treat the entity as detached (attempts UPDATE instead of INSERT).
         newAccount.setAccountType(AccountsConstants.SAVINGS);
         newAccount.setBranchAddress(AccountsConstants.ADDRESS);
         newAccount.setCreatedAt(LocalDateTime.now());
